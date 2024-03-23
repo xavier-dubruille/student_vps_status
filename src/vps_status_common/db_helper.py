@@ -1,8 +1,8 @@
 import sqlite3
 from dataclasses import fields, astuple
 
-from config import sqlite_db_file
-from status import Status
+from .config import sqlite_db_file
+from .status import Status
 
 
 class DbHelper:
