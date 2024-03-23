@@ -4,7 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/vps_status_common" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/vps_status_fetch" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/vps_status_fetch_group" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/vps_status_web" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
@@ -16,7 +16,7 @@
     <option name="namespacePackageFolders">
       <list>
         <option value="$MODULE_DIR$/src/vps_status_common" />
-        <option value="$MODULE_DIR$/src/vps_status_fetch" />
+        <option value="$MODULE_DIR$/src/vps_status_fetch_group" />
         <option value="$MODULE_DIR$/src/vps_status_web" />
       </list>
     </option>

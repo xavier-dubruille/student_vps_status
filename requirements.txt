@@ -1,3 +1,4 @@
 db-sqlite3
 flask
 requests
+flask-htpasswd
