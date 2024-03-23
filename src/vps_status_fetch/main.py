@@ -3,8 +3,8 @@ from datetime import datetime
 
 import requests
 
-from src.vps_status_common.db_helper import DbHelper
-from src.vps_status_common.status import Status
+from vps_status_common.db_helper import DbHelper
+from vps_status_common.status import Status
 
 
 def check_https(url):

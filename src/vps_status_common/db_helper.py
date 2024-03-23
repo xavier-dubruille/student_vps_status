@@ -2,7 +2,7 @@ import sqlite3
 from dataclasses import fields, astuple
 
 from config import sqlite_db_file
-from src.vps_status_common.status import Status
+from status import Status
 
 
 class DbHelper:
