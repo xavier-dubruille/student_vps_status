@@ -1,16 +1,17 @@
 import sqlite3
 from dataclasses import fields, astuple
 
-from vps_status.status import Status
+from config import sqlite_db_file
+from src.vps_status_common.status import Status
 
 
-class DbHelper():
+class DbHelper:
     def __init__(self):
         fi = fields(Status)
         self.headers = ','.join(f.name for f in fi)
         self.placeholders = ','.join(['?'] * len(fi))
 
-        self.con = sqlite3.connect("status.db")
+        self.con = sqlite3.connect(sqlite_db_file)
         self.cur = self.con.cursor()
         self.cur.execute("DROP TABLE IF EXISTS status")  # todo: update instead of drop ...
 
