@@ -23,7 +23,7 @@ def get_status():
     con = sqlite3.connect(sqlite_db_file)
     con.row_factory = dataclass_factory
     res = con.execute("SELECT * FROM status").fetchall()
-    print(res)
+    # print(res)
     return res
 
 
@@ -32,7 +32,7 @@ def get_status():
 def index(user):
     status = get_status()
     time = '-' if (status is None or len(status) == 0) else status[0].date_time_batch
-    return render_template('table.html', title='Gtoups Status', time=time, status=status)
+    return render_template('table.html', title='Status', time=time, status=status)
 
 
 @app.route('/vps/<ip>')
