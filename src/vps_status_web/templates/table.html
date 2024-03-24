@@ -30,9 +30,22 @@
         <td><a href="https://{{ statu.url_www }}" target="_blank">link</a> | {{ statu.content_www_ssl[:50] }}</td>
         <td>{{ statu.content_www_http[:50] }}</td>
         <td><a href="vps/{{ statu.ip_ns }}" target="_blank">{{ statu.ip_ns }}</a></td>
-        <td><a href="https://dnssec-analyzer.verisignlabs.com/{{ statu.group_name }}.ephec-ti.be" target="_blank">
-            {{ statu.dnssec }}
-        </a></td>
+
+        {% if statu.dnssec %}
+        <td class="p-3 mb-2 bg-success text-white">
+            <a href="https://dnssec-analyzer.verisignlabs.com/{{ statu.group_name }}.ephec-ti.be" target="_blank">
+                Probably
+            </a>
+        </td>
+        {% else %}
+        <td class="p-3 mb-2 bg-danger text-white">
+            <a href="https://dnssec-analyzer.verisignlabs.com/{{ statu.group_name }}.ephec-ti.be" target="_blank">
+                No
+            </a>
+        </td>
+        {% endif %}
+
+
         <td>-</td>
     </tr>
     {% endfor %}

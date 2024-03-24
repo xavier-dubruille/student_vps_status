@@ -64,7 +64,7 @@ def main():
         content_www_http = get_content(url_www, False)
         content_blog_http = get_content(url_blog)
         www_https_valid = check_https(url_www)
-        dnssec = "Probably" if check_https(f"{group_name}.ephec-ti.be") else "No"
+        dnssec = check_dnssec(f"{group_name}.ephec-ti.be")
         date_time = now_formated()
         ip_ns = get_ip(f"ns.{group_name}.ephec-ti.be")
         status = Status(group_name=group_name,
