@@ -20,9 +20,13 @@
     <tr>
         <td>{{ statu.group_name }}</td>
         <td><a href="vps/{{ statu.ip_web }}" target="_blank">{{ statu.ip_web }}</a></td>
-        <td {% if not statu.www_https_valid %} class="p-3 mb-2 bg-danger text-white" {% endif %}>
-            {{ statu.www_https_valid }}
-        </td>
+
+        {% if statu.www_https_valid %}
+        <td class="p-3 mb-2 bg-success text-white">Yes</td>
+        {% else %}
+        <td class="p-3 mb-2 bg-danger text-white">No</td>
+        {% endif %}
+
         <td><a href="https://{{ statu.url_www }}" target="_blank">link</a> | {{ statu.content_www_ssl[:50] }}</td>
         <td>{{ statu.content_www_http[:50] }}</td>
         <td><a href="vps/{{ statu.ip_ns }}" target="_blank">{{ statu.ip_ns }}</a></td>
