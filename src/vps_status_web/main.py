@@ -16,13 +16,22 @@ htpasswd = HtPasswdAuth(app)
 
 def dataclass_factory(cursor, row):
     fields = [column[0] for column in cursor.description]
+
+    # let's remove the "id" column
+    fields = fields[1:]
+    row = row[1:]
     return Status(**{k: v for k, v in zip(fields, row)})
 
 
 def get_status():
     con = sqlite3.connect(sqlite_db_file)
+
+    cur = con.cursor()
+    max_id = cur.execute("SELECT MAX(id) FROM status;").fetchone()[0]
+    max_date = cur.execute(f"SELECT date_time_batch FROM status WHERE id={max_id}").fetchone()[0]
+
     con.row_factory = dataclass_factory
-    res = con.execute("SELECT * FROM status").fetchall()
+    res = con.execute(f"SELECT * FROM status WHERE date_time_batch='{max_date}'").fetchall()
     # print(res)
     return res
 

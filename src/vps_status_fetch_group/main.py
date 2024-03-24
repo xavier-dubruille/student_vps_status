@@ -3,6 +3,7 @@ from datetime import datetime
 
 import requests
 
+from vps_status_common.config import GROUP_FILE_PATH
 from vps_status_common.db_helper import DbHelper
 from vps_status_common.status import Status
 
@@ -37,7 +38,7 @@ def main():
     db_helper = DbHelper()
 
     groups = []
-    with open("groups.txt", "r") as f:
+    with open(GROUP_FILE_PATH, "r") as f:
         groups = [line.strip() for line in f]
 
     date_time_batch = datetime.now()
