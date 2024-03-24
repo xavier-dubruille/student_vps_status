@@ -15,11 +15,14 @@ class DbHelper:
         self.con = sqlite3.connect(sqlite_db_file)
         self.cur = self.con.cursor()
 
-        status_columns = self.cur.execute("SELECT name FROM PRAGMA_TABLE_INFO('status');").fetchall()
-        if len(status_columns) != (len(fi) + 1):
-            self.cur.execute("DROP TABLE IF EXISTS status")  # todo: update instead of drop ...
-
         self.cur.execute(f"CREATE TABLE IF NOT EXISTS status ( id integer primary key autoincrement, {self.headers})")
+
+        status_columns = self.cur.execute("SELECT name FROM PRAGMA_TABLE_INFO('status');").fetchall()
+
+        set_db = set(t[0] for t in status_columns)
+        set_code = set(self.headers.split(','))
+        for c in set_code.difference(set_db):
+            self.cur.execute(f"ALTER TABLE status ADD COLUMN {c} TEXT")
 
     def save_status(self, status: Status):
         query = f"INSERT INTO status ({self.headers}) VALUES({self.placeholders})"

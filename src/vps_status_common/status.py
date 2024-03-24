@@ -5,7 +5,7 @@ from datetime import datetime
 @dataclass
 class Status:
     group_name: str
-    date_time_batch: datetime
+    date_time_batch: str
     ip_web: str
     url_www: str
     www_https_valid: bool
@@ -13,4 +13,4 @@ class Status:
     content_www_http: str
     content_blog_http: str
     ip_ns: str
-    date_time: datetime
+    date_time: str
