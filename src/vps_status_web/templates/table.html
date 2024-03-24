@@ -11,7 +11,7 @@
         <th>https://www...</th>
         <th>http://www...</th>
         <th>IP NS</th>
-        <th>DNS info</th>
+        <th>DNSSEC</th>
         <th>IP Mail</th>
     </tr>
     </thead>
@@ -26,8 +26,9 @@
         <td><a href="https://{{ statu.url_www }}" target="_blank">link</a> | {{ statu.content_www_ssl[:50] }}</td>
         <td>{{ statu.content_www_http[:50] }}</td>
         <td><a href="vps/{{ statu.ip_ns }}" target="_blank">{{ statu.ip_ns }}</a></td>
-        <td><a href="https://dnssec-analyzer.verisignlabs.com/{{ statu.group_name }}.ephec-ti.be" target="_blank">dns
-            info</a></td>
+        <td><a href="https://dnssec-analyzer.verisignlabs.com/{{ statu.group_name }}.ephec-ti.be" target="_blank">
+            {{ statu.dnssec }}
+        </a></td>
         <td>-</td>
     </tr>
     {% endfor %}

@@ -1,4 +1,5 @@
 import socket
+import subprocess
 from datetime import datetime, timezone
 
 import requests
@@ -14,6 +15,15 @@ def check_https(url):
         return True
     except (requests.exceptions.SSLError, ConnectionError, Exception) as e:
         return False
+
+
+def check_dnssec(url):
+    cmd = f"dig {url} DNSKEY +short"
+
+    process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out = process.stdout.read().decode("utf-8")
+
+    return out is not None and out.strip() != ""
 
 
 def get_content(url, https=False):
@@ -56,6 +66,7 @@ def main():
         content_www_http = get_content(url_www, False)
         content_blog_http = get_content(url_blog)
         www_https_valid = check_https(url_www)
+        dnssec = "Probably" if check_https(f"{group_name}.ephec-ti.be") else "No"
         date_time = now(tz)
         ip_ns = get_ip(f"ns.{group_name}.ephec-ti.be")
         status = Status(group_name=group_name,
@@ -66,6 +77,7 @@ def main():
                         content_www_ssl=content_www_ssl,
                         content_www_http=content_www_http,
                         content_blog_http=content_blog_http,
+                        dnssec=dnssec,
                         ip_ns=ip_ns,
                         date_time=date_time)
         db_helper.save_status(status)

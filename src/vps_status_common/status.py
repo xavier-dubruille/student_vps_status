@@ -12,5 +12,6 @@ class Status:
     content_www_ssl: str
     content_www_http: str
     content_blog_http: str
+    dnssec: str
     ip_ns: str
     date_time: str
