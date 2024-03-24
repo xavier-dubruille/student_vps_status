@@ -1,5 +1,5 @@
 import socket
-from datetime import datetime
+from datetime import datetime, timezone
 
 import requests
 
@@ -34,6 +34,10 @@ def get_ip(url):
     return ip
 
 
+def now(tz):
+    return datetime.now(tz).strftime("%d/%m/%Y %H:%M")
+
+
 def main():
     db_helper = DbHelper()
 
@@ -41,7 +45,9 @@ def main():
     with open(GROUP_FILE_PATH, "r") as f:
         groups = [line.strip() for line in f]
 
-    date_time_batch = datetime.now()
+    tz = timezone(datetime.utcnow().astimezone().utcoffset())
+
+    date_time_batch = now(tz)
     for group_name in groups:
         url_www = f"www.{group_name}.ephec-ti.be"
         url_blog = f"blog.{group_name}.ephec-ti.be"
@@ -50,7 +56,7 @@ def main():
         content_www_http = get_content(url_www, False)
         content_blog_http = get_content(url_blog)
         www_https_valid = check_https(url_www)
-        date_time = datetime.now()
+        date_time = now(tz)
         ip_ns = get_ip(f"ns.{group_name}.ephec-ti.be")
         status = Status(group_name=group_name,
                         date_time_batch=date_time_batch,
