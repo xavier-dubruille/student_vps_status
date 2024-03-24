@@ -33,13 +33,15 @@
 
         {% if statu.dnssec %}
         <td class="p-3 mb-2 bg-success text-white">
-            <a href="https://dnssec-analyzer.verisignlabs.com/{{ statu.group_name }}.ephec-ti.be" target="_blank">
+            <a style="color: white"
+               href="https://dnssec-analyzer.verisignlabs.com/{{ statu.group_name }}.ephec-ti.be" target="_blank">
                 Probably
             </a>
         </td>
         {% else %}
         <td class="p-3 mb-2 bg-danger text-white">
-            <a href="https://dnssec-analyzer.verisignlabs.com/{{ statu.group_name }}.ephec-ti.be" target="_blank">
+            <a style="color: white"
+               href="https://dnssec-analyzer.verisignlabs.com/{{ statu.group_name }}.ephec-ti.be" target="_blank">
                 No
             </a>
         </td>
