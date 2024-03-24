@@ -44,8 +44,8 @@ def get_ip(url):
     return ip
 
 
-def now(tz):
-    return datetime.now(tz).strftime("%d/%m/%Y %H:%M")
+def now_formated():
+    return datetime.now().strftime("%H:%M %d/%m/%Y")
 
 
 def main():
@@ -55,9 +55,7 @@ def main():
     with open(GROUP_FILE_PATH, "r") as f:
         groups = [line.strip() for line in f]
 
-    tz = timezone(datetime.utcnow().astimezone().utcoffset())
-
-    date_time_batch = now(tz)
+    date_time_batch = now_formated()
     for group_name in groups:
         url_www = f"www.{group_name}.ephec-ti.be"
         url_blog = f"blog.{group_name}.ephec-ti.be"
@@ -67,7 +65,7 @@ def main():
         content_blog_http = get_content(url_blog)
         www_https_valid = check_https(url_www)
         dnssec = "Probably" if check_https(f"{group_name}.ephec-ti.be") else "No"
-        date_time = now(tz)
+        date_time = now_formated()
         ip_ns = get_ip(f"ns.{group_name}.ephec-ti.be")
         status = Status(group_name=group_name,
                         date_time_batch=date_time_batch,
