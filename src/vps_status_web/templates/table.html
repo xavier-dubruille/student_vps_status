@@ -31,7 +31,7 @@
         <td>{{ statu.content_www_http[:50] }}</td>
         <td><a href="vps/{{ statu.ip_ns }}" target="_blank">{{ statu.ip_ns }}</a></td>
 
-        {% if statu.dnssec %}
+        {% if statu.dnssec == "1" %}
         <td class="p-3 mb-2 bg-success text-white">
             <a style="color: white"
                href="https://dnssec-analyzer.verisignlabs.com/{{ statu.group_name }}.ephec-ti.be" target="_blank">
