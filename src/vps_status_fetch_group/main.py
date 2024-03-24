@@ -23,7 +23,7 @@ def check_dnssec(url):
     process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out = process.stdout.read().decode("utf-8")
 
-    return out is not None and out.strip() != ""
+    return out is not None and out.strip() != "" and 'error' not in out
 
 
 def get_content(url, https=False):
