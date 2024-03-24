@@ -23,7 +23,7 @@
         <td {% if not statu.www_https_valid %} class="p-3 mb-2 bg-danger text-white" {% endif %}>
             {{ statu.www_https_valid }}
         </td>
-        <td>{{ statu.content_www_ssl[:50] }}</td>
+        <td><a href="https://{{ status.url_www }}">link</a> {{ statu.content_www_ssl[:50] }}</td>
         <td>{{ statu.content_www_http[:50] }}</td>
         <td><a href="vps/{{ statu.ip_ns }}" target="_blank">{{ statu.ip_ns }}</a></td>
         <td><a href="https://dnssec-analyzer.verisignlabs.com/{{ statu.group_name }}.ephec-ti.be" target="_blank">dns
