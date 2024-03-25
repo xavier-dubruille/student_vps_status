@@ -53,7 +53,7 @@ def get_vps_data(ip):
     max_id = cur.execute(f"SELECT MAX(id) FROM vps WHERE ip='{ip}'").fetchone()[0]
 
     con.row_factory = dataclass_factory_vps
-    res = con.execute(f"SELECT * FROM vps WHERE id='{max_id}'").fetchone()[0]
+    res = con.execute(f"SELECT * FROM vps WHERE id='{max_id}'").fetchall()
     # print(res)
     return res
 
@@ -69,10 +69,8 @@ def index(user):
 @app.route('/vps/<ip>')
 @htpasswd.required
 def single_ip(ip, user):
-    # vps_data = get_vps_data(ip)
-    data = {'ip': ip}
-    time = datetime.now()
-    return render_template('table_single_vps.html', title='VPS Status', time=time, data=data)
+    vps_data: VPS = get_vps_data(ip)[0]
+    return render_template('table_single_vps.html', title='VPS Status', time=vps_data.now, data=vps_data)
 
 
 app.run(host="0.0.0.0", port=FLASK_PORT, debug=FLASK_DEBUG)
