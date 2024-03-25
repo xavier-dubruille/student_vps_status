@@ -19,7 +19,7 @@ def main():
         nmap_result = nmScan.scan(ip, '1-65535')
         scan = nmap_result['scan'][ip]['tcp']
         # scan = "my scan"
-        vps = VPS(ip=ip, student=student, now=now_formated(), scan=scan)
+        vps = VPS(ip=ip, student=student, now=now_formated(), scan=str(scan))
         db_helper.save_vps(vps)
     db_helper.con.commit()
 
