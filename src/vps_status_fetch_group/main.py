@@ -1,12 +1,12 @@
 import socket
 import subprocess
-from datetime import datetime, timezone
 
 import requests
 
 from vps_status_common.config import GROUP_FILE_PATH
 from vps_status_common.db_helper import DbHelper
 from vps_status_common.status import Status
+from vps_status_common.utils import now_formated
 
 
 def check_https(url):
@@ -42,10 +42,6 @@ def get_ip(url):
     except Exception:
         pass
     return ip
-
-
-def now_formated():
-    return datetime.now().strftime("%H:%M %d/%m/%Y")
 
 
 def main():

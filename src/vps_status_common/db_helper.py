@@ -38,6 +38,8 @@ class DbHelper:
         for c in set_code.difference(set_db):
             self.cur.execute(f"ALTER TABLE status ADD COLUMN {c} TEXT")
 
+        self.con.commit()
+
     def _init_vps(self):
         fi = fields(VPS)
         self.headers = ','.join(f.name for f in fi)
@@ -48,9 +50,11 @@ class DbHelper:
 
         self.cur.execute(f"CREATE TABLE IF NOT EXISTS vps ( id integer primary key autoincrement, {self.headers})")
 
-        status_columns = self.cur.execute("SELECT name FROM PRAGMA_TABLE_INFO('vps');").fetchall()
+        vps_columns = self.cur.execute("SELECT name FROM PRAGMA_TABLE_INFO('vps');").fetchall()
 
-        set_db = set(t[0] for t in status_columns)
+        set_db = set(t[0] for t in vps_columns)
         set_code = set(self.headers.split(','))
         for c in set_code.difference(set_db):
             self.cur.execute(f"ALTER TABLE vps ADD COLUMN {c} TEXT")
+
+        self.con.commit()
