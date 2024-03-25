@@ -7,3 +7,4 @@ class VPS:
     student: str
     date_time_batch: datetime
     ip: str
+    scan: str
