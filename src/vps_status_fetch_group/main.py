@@ -26,6 +26,16 @@ def check_dnssec(url):
     return out is not None and out.strip() != "" and 'error' not in out
 
 
+def check_ns_recursive(ip):
+    if ip is None or len(ip) == 0:
+        return False
+    cmd = f"dig +short @{ip} google.com"
+    process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out = process.stdout.read().decode("utf-8")
+
+    return out is not None and out.strip() != "" and 'error' not in out
+
+
 def get_content(url, https=False):
     scheme = "https://" if https else "http://"
     try:
@@ -73,6 +83,7 @@ def main():
                         content_blog_http=content_blog_http,
                         dnssec=dnssec,
                         ip_ns=ip_ns,
+                        is_recursive=check_ns_recursive(ip_ns),
                         date_time=date_time)
         db_helper.save_status(status)
     db_helper.con.commit()

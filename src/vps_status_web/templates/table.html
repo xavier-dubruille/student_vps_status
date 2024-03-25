@@ -47,6 +47,11 @@
         </td>
         {% endif %}
 
+        {% if statu.is_recursive == "1" %}
+        <td class="p-3 mb-2 bg-danger text-white">YES</td>
+        {% else %}
+        <td>No</td>
+        {% endif %}
 
         <td>-</td>
     </tr>

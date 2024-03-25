@@ -4,6 +4,7 @@ from datetime import datetime
 from flask import Flask, render_template
 from flask_htpasswd import HtPasswdAuth
 
+from vps_status_common.vps import VPS
 from vps_status_common.config import sqlite_db_file, FLASK_HTPASSWD_PATH, FLASK_SECRET, FLASK_PORT, FLASK_DEBUG
 from vps_status_common.status import Status
 
@@ -23,6 +24,15 @@ def dataclass_factory(cursor, row):
     return Status(**{k: v for k, v in zip(fields, row)})
 
 
+def dataclass_factory_vps(cursor, row):
+    fields = [column[0] for column in cursor.description]
+
+    # let's remove the "id" column
+    fields = fields[1:]
+    row = row[1:]
+    return VPS(**{k: v for k, v in zip(fields, row)})
+
+
 def get_status():
     con = sqlite3.connect(sqlite_db_file)
 
@@ -32,6 +42,18 @@ def get_status():
 
     con.row_factory = dataclass_factory
     res = con.execute(f"SELECT * FROM status WHERE date_time_batch='{max_date}'").fetchall()
+    # print(res)
+    return res
+
+
+def get_vps_data(ip):
+    con = sqlite3.connect(sqlite_db_file)
+
+    cur = con.cursor()
+    max_id = cur.execute(f"SELECT MAX(id) FROM vps WHERE ip='{ip}'").fetchone()[0]
+
+    con.row_factory = dataclass_factory_vps
+    res = con.execute(f"SELECT * FROM vps WHERE id='{max_id}'").fetchone()[0]
     # print(res)
     return res
 
@@ -47,6 +69,7 @@ def index(user):
 @app.route('/vps/<ip>')
 @htpasswd.required
 def single_ip(ip, user):
+    # vps_data = get_vps_data(ip)
     data = {'ip': ip}
     time = datetime.now()
     return render_template('table_single_vps.html', title='VPS Status', time=time, data=data)

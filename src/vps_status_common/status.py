@@ -14,4 +14,5 @@ class Status:
     content_blog_http: str
     dnssec: str
     ip_ns: str
+    is_recursive: str
     date_time: str
