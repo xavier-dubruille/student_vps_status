@@ -45,6 +45,15 @@ def get_status():
     # print(res)
     return res
 
+def get_all_vps():
+    con = sqlite3.connect(sqlite_db_file)
+
+    keys = ["ip", "student"]
+    res = con.execute(f"SELECT DISTINCT ip, student FROM vps ").fetchall()
+    res_dic = [dict(zip(keys, t)) for t in res]
+
+    return res_dic
+
 
 def get_vps_data(ip):
     con = sqlite3.connect(sqlite_db_file)
@@ -59,16 +68,22 @@ def get_vps_data(ip):
 
 
 @app.route('/')
-@htpasswd.required
-def index(user):
+# @htpasswd.required
+def index():
     status = get_status()
     time = '-' if (status is None or len(status) == 0) else status[0].date_time_batch
     return render_template('table.html', title='Status', time=time, status=status)
 
+@app.route('/vps')
+# @htpasswd.required
+def all_vps():
+    status = get_all_vps()
+    return render_template('liste_vps.html', title='all_vps', status=status)
+
 
 @app.route('/vps/<ip>')
-@htpasswd.required
-def single_ip(ip, user):
+# @htpasswd.required
+def single_ip(ip):
     vps_data: VPS = get_vps_data(ip)[0]
     return render_template('table_single_vps.html', title='VPS Status', time=vps_data.now, data=vps_data)
 

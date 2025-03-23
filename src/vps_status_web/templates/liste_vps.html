@@ -1,0 +1,38 @@
+§({% extends "base.html" %}
+
+{% block content %}
+<table id="data" class="table table-striped">
+    <thead>
+    <tr>
+
+        <th>IP</th>
+        <th>Student</th>
+        <th>Secured</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for statu in status %}
+    <tr>
+        <td>{{ statu.ip }}</td>
+        <td>{{ statu.student }}</td>
+        <td><a href="vps/{{ statu.ip }}" target="_blank">?</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+        $('#data').DataTable({
+            columns: [
+                null,
+                {searchable: false},
+                {orderable: false, searchable: false},
+                {orderable: false, searchable: false},
+                null],
+        });
+    });
+</script>
+{% endblock %}
