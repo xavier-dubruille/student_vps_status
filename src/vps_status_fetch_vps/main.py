@@ -19,7 +19,12 @@ def main():
         ip = vps.split()[0]
         student = vps.split()[1]
         nmap_result = nmScan.scan(ip, '1-65535')
-        scan = nmap_result['scan'][ip]['tcp']
+        print(f"map_result: {nmap_result}")
+        try:
+            scan = nmap_result['scan'][ip]['tcp']
+        except KeyError:
+            print(f"key error ... ip={ip}")
+            continue
         # print(scan)
         port_ssh = next((port for port, details in scan.items() if details["product"] == "OpenSSH"), None)
         # print(port_ssh)
@@ -27,6 +32,7 @@ def main():
                   ssh_port=str(port_ssh), password_disabled="?",
                   fail2ban="?", ts=str(time.time()))
         db_helper.save_vps(vps)
+        db_helper.con.commit()
     db_helper.con.commit()
 
 
